@@ -3,26 +3,34 @@
 #include <string.h>
 #include <time.h>
 
+#define MAXWORD 2048	
+#define MAXWORDLENGTH 64
 int main ()
 {
 	 
 	srand(time(NULL));
 		
-	char guesswords[][16] = 
+	char guesswords[MAXWORD][MAXWORDLENGTH];
+	int WordRead = 0;
+	
+	FILE *pf = fopen("facil.txt", "r");
+	if(pf == NULL);
 	{
-		"green",
-		"yellow",
-		"purple",
-		"windows",
-		"linux",
-		"apple"
-	
-	
-	
-	};
+		printf("Falha ao abrir arquivo\n");
+	}
+	char input[64]; 
+ 
+	while(fgets(input, 63, pf))
+	{
+		sscanf(input, "%s",guesswords[WordRead]);
+		printf("Escaneadas: input: %s , guesswords[%d]: %s\n", input, WordRead, guesswords[WordRead]);
+		WordRead++;
+	}
+	printf("Palavras totais: %d\n");
 
+	fclose(pf);
 	// index de palavra aleatória 
-	int randomIndex = rand() %6;
+	int randomIndex = rand() % WordRead;
 	
 	int vidasnum = 5;
 	int numCorrect = 0;
